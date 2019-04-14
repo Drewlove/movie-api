@@ -1,11 +1,15 @@
-
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
+
 const app = express()
-app.use(morgan('dev'));
+
+const morganSettings = process.env.NODE_ENV === 'production' ? 'tiny' : 'common'
+
+app.use(morgan(morganSettings));
+
 app.use(helmet()); 
 app.use(cors()); 
 
@@ -36,5 +40,19 @@ app.get('/movies', function sortByGenre(req, res){
         }
     res.json(results)
 })
+
+app.use((error, req, res, next)=> {
+    let response; 
+    if(process.env.NODE_ENV === 'production'){
+        response = {error: {message: 'server error'}}
+    } else {
+        response = {error}
+    }
+    res.status(500).json(response)
+})
+
+const PORT = process.env.PORT || 8000
+
+app.listen(PORT)
 
 
