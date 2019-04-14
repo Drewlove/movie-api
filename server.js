@@ -1,3 +1,4 @@
+
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
@@ -35,32 +36,5 @@ app.get('/movies', function sortByGenre(req, res){
         }
     res.json(results)
 })
-
-
-const PORT = 8000
-
-app.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`)
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-// app.use(function validateBearerToken(req, res, next) {
-//     const apiToken = process.env.API_TOKEN
-//     console.log('test works', apiToken)
-//     // move to the next middleware
-//     next()
-//   })
-
 
 
